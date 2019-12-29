@@ -1,7 +1,7 @@
 package com.tfar.nametagswithoutanvil;
 
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 
@@ -14,6 +14,6 @@ public class SlotInk extends SlotItemHandler {
 
   @Override
   public boolean isItemValid(@Nonnull ItemStack p_75214_1_) {
-    return p_75214_1_.getItem() == Items.INK_SAC;
+    return p_75214_1_.getItem().isIn(Tags.Items.DYES_BLACK);
   }
 }

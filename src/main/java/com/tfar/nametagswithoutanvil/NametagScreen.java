@@ -1,6 +1,7 @@
 package com.tfar.nametagswithoutanvil;
 
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.inventory.ContainerScreen;
 import net.minecraft.client.gui.widget.TextFieldWidget;
@@ -42,7 +43,7 @@ public class NametagScreen extends ContainerScreen<NameTagContainer> implements 
     this.nameField.setDisabledTextColour(-1);
     this.nameField.setEnableBackgroundDrawing(false);
     this.nameField.setMaxStringLength(35);
-    this.nameField.func_212954_a(this::func_214075_a);
+    this.nameField.setResponder(this::func_214075_a);
     this.children.add(this.nameField);
     (this.container).addListener(this);
     this.setFocusedDefault(this.nameField);
@@ -52,11 +53,9 @@ public class NametagScreen extends ContainerScreen<NameTagContainer> implements 
   public void render(int p_render_1_, int p_render_2_, float p_render_3_) {
     this.renderBackground();
     super.render(p_render_1_, p_render_2_, p_render_3_);
-
-    this.renderHoveredToolTip(p_render_1_, p_render_2_);
-    GlStateManager.disableLighting();
-    GlStateManager.disableBlend();
+    RenderSystem.disableBlend();
     this.nameField.render(p_render_1_, p_render_2_, p_render_3_);
+    this.renderHoveredToolTip(p_render_1_, p_render_2_);
   }
 
   /**
@@ -82,9 +81,9 @@ public class NametagScreen extends ContainerScreen<NameTagContainer> implements 
     int itemX = 15;
     int itemY = 20;
 
-    GlStateManager.pushMatrix();
-    GlStateManager.enableRescaleNormal();
-    RenderHelper.enableGUIStandardItemLighting();
+    RenderSystem.pushMatrix();
+    RenderSystem.enableRescaleNormal();
+    RenderHelper.func_227780_a_();
     minecraft.getItemRenderer().renderItemAndEffectIntoGUI(nametag_icon, itemX, itemY);
     minecraft.getItemRenderer().renderItemOverlays(minecraft.fontRenderer, nametag_icon, itemX, itemY);
 
@@ -105,8 +104,8 @@ public class NametagScreen extends ContainerScreen<NameTagContainer> implements 
     }
 
     RenderHelper.disableStandardItemLighting();
-    GlStateManager.disableRescaleNormal();
-    GlStateManager.popMatrix();
+    RenderSystem.disableRescaleNormal();
+    RenderSystem.popMatrix();
   }
 
   private void func_214075_a(String p_214075_1_) {
@@ -115,9 +114,6 @@ public class NametagScreen extends ContainerScreen<NameTagContainer> implements 
       Slot lvt_3_1_ = this.container.getSlot(0);
       if (lvt_3_1_.getHasStack() && !lvt_3_1_.getStack().hasDisplayName() && p_214075_1_.equals(lvt_3_1_.getStack().getDisplayName().getString())) {
       }
-
-      //this.nameField.setText(lvt_2_1_);
-     // this.minecraft.player.connection.sendPacket(new CRenameItemPacket(lvt_2_1_));
     }
   }
 
@@ -153,7 +149,6 @@ public class NametagScreen extends ContainerScreen<NameTagContainer> implements 
 
   @Override
   public void sendWindowProperty(Container container, int i, int i1) {
-
   }
 
   private void onPress(Button b) {

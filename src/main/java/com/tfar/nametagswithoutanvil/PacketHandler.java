@@ -1,6 +1,5 @@
 package com.tfar.nametagswithoutanvil;
 
-import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -19,7 +18,7 @@ public class PacketHandler {
 
     INSTANCE.registerMessage(1, SPacketInkRequired.class,
             (msg, buffer) -> {},
-            (t) -> new SPacketInkRequired(),
+            a -> new SPacketInkRequired(),
             SPacketInkRequired::handle);
   }
 }
